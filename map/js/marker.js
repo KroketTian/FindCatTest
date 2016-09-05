@@ -5,6 +5,32 @@
 var cluster;
 var markers = [];
 var catMarkers = [];
+function markerfather(option){
+    var me = this;
+    this.markerType = option.markerType;
+    this.lng = option.lng;
+    this.lat = option.lat;
+    this.content = "";
+    // this.icon = null;
+    this.mapmarker = null;
+
+    this.create = function(){
+        me.mapmarker = new AMap.Marker({
+            position:[me.lng,me.lat],
+            content:me.content,
+            // icon:me.icon
+        })
+        markers.push(me.mapmarker);
+        catMarkers.push(me.mapmarker);
+
+        // me.mapmarker.setMap(mapObj);
+    };
+    this.setIntoMap = function(mapObj){
+        if(me.mapmarker){
+            me.mapmarker.setMap(mapObj);
+        }
+    };
+}
 function catmarker(option){
     var me = this;
     this.markerType = option.markerType;
@@ -43,15 +69,17 @@ function addCluster(tag,mapObj,markers) {
     }
     if (tag == 1) {
         var sts = [{
-            url: "",
+            url: "bscat/img/clusterIcon.jpg",
             size: new AMap.Size(32, 32),
             offset: new AMap.Pixel(-16, -30),
-            // textColor:'transparent'
+            textColor:'#fff'
         }];
         mapObj.plugin(["AMap.MarkerClusterer"], function() {
             cluster = new AMap.MarkerClusterer(mapObj, markers, {
                 styles: sts
             });
+            var clusterMarkers = cluster.getGridSize();
+            console.log(clusterMarkers);
         });
     } else {
         map.plugin(["AMap.MarkerClusterer"], function() {

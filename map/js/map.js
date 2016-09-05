@@ -36,12 +36,15 @@ function map(){
                             });
                             marker.create();
                             marker.setIntoMap(me.map);
-                            me.map.setCenter(marker.mapmarker.getPosition());
+                            // me.map.setCenter(marker.mapmarker.getPosition());
                         }
+                        me.map.setFitView(markers);
                     }
-                    addCluster(1,me.map,markers);
                 }
             }
         })
+    }
+    this.addCluster = function(tag,markers){
+        addCluster(tag,me.map,markers);
     }
 }
