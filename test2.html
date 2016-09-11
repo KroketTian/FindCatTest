@@ -48,6 +48,8 @@
     };
     district = new AMap.DistrictSearch(opts);//注意：需要使用插件同步下发功能才能这样直接使用
     district.search('中国', function(status, result) {
+        console.log(result);
+        console.log(district);
         getData(result);
     });
     function getData(e) {

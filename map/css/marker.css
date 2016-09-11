@@ -35,3 +35,7 @@
 .amap-marker:hover {
     z-index:101!important;
 }
+.districtCatImg{
+    width: 50px;
+    margin:2px;
+}

@@ -12,7 +12,7 @@ function map(){
             zoom:10
         })
     }
-    this.addMarkerByajax = function(url,data){
+    this.addMarkerByajax = function(url,data,type){
         $.ajax({
             url:url,
             data:data,
@@ -22,29 +22,41 @@ function map(){
             success:function(data){
                 console.log(data.data);
                 if(data.data){
-                    if(data.type === "catmarker") {
-                        for (var i = 0; i < data.data.length; i++) {
-                            var marker = new catmarker({
-                                markerType: data.data[i].type,
-                                lng: data.data[i].LONGITUDE,
-                                lat: data.data[i].LATITUDE,
-                                content: {
-                                    imgurl: data.data[i].PICURL,
-                                    catname: data.data[i].NAME,
-                                    cathost: data.data[i].cathost
-                                }
-                            });
-                            marker.create();
-                            marker.setIntoMap(me.map);
-                            // me.map.setCenter(marker.mapmarker.getPosition());
-                        }
-                        me.map.setFitView(markers);
+                    if(type === "catmarker") {
+                        var catMarkersObj = new catMarkers();
+                        catMarkersObj.createCatMarkersByData(data);
+                        catMarkersObj.setMarkersIntoMap(me.map);
                     }
                 }
             }
         })
     }
+    this.addDistrictMerkers = function(){
+        AMap.service('AMap.DistrictSearch',function(){
+            var districtSearch = new AMap.DistrictSearch({
+                level : 'country',
+                subdistrict : 3
+            });
+            districtSearch.search('中国',function(status,result){
+                console.log(result);
+                var districtMarkersObj = new districtMarkers();
+                districtMarkersObj.createMarkersByData(result.districtList);
+                districtMarkersObj.setMarkersIntoMap(me.map);
+            })
+        })
+    }
     this.addCluster = function(tag,markers){
         addCluster(tag,me.map,markers);
+    }
+    this.findCityAdcode = function(){
+        AMap.service('AMap.DistrictSearch',function(){
+            var districtSearch = new AMap.DistrictSearch({
+                level : 'country',
+                subdistrict : 3
+            });
+            districtSearch.search('中国',function(status,result){
+                console.log(result);
+            })
+        })
     }
 }
