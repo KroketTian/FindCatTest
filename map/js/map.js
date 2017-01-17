@@ -6,12 +6,14 @@ function map(){
 
     var me = this;
 
+    //初始化地图
     this.createmap = function(container){
         me.map = new AMap.Map(container,{
             resizeENable: true,
             zoom:10
         })
     }
+    //向地图添加marker
     this.addMarkerByajax = function(url,data,type){
         $.ajax({
             url:url,
@@ -31,6 +33,7 @@ function map(){
             }
         })
     }
+    //
     this.addDistrictMerkers = function(){
         AMap.service('AMap.DistrictSearch',function(){
             var districtSearch = new AMap.DistrictSearch({
@@ -45,9 +48,11 @@ function map(){
             })
         })
     }
+    //添加聚集
     this.addCluster = function(tag,markers){
         addCluster(tag,me.map,markers);
     }
+    //
     this.findCityAdcode = function(){
         AMap.service('AMap.DistrictSearch',function(){
             var districtSearch = new AMap.DistrictSearch({
